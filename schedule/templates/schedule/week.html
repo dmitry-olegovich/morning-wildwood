@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Week Schedule{% endblock title %}
+
+{% block scripts %} 
+<script type="text/javascript" src="{% static 'schedule/overlaps.js' %}" defer></script> 
+<script type="text/javascript" src="{% static 'schedule/position.js' %}" defer></script> 
+<script type="text/javascript" src="{% static 'schedule/listeners.js' %}" defer></script>
+<script type="text/javascript" src="{% static 'schedule/filters_init.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block styles %}{% load static %} <link rel="stylesheet" type="text/css" href="{% static 'schedule/styles.css' %}">{% endblock styles %}
+
+
+{% block topbar-menu-schedule %}
+	<div  class="dropdown col-auto color-red-on-hover topbar-menu-current">
+		<div id="menu-schedule" class="dropdown-toggle" data-toggle="dropdown">Schedule</div>
+		<ul class="dropdown-menu colors-main-filled topbar-menu-dropdown-menu" role="menu" aria-labelledby="menu1">
+		</ul>
+	</div>
+{% endblock topbar-menu-schedule %}
+
+{% block page-content %}
+	<div class="content container-fluid">
+		<div id="control-area" class="row colors-aux-filled">
+			<div class="col-auto">
+				<a href="{% url 'schedule:schedule' %}?starting={{ previous|date:'Y-m-d' }}&teacher={{ filters_values.0 }}&subj={{ filters_values.1 }}&location={{ filters_values.2 }}&room={{ filters_values.3 }}">&#x25C0 Previous week</a>
+			</div>
+			<div class="col text-center">
+				<details id="filter-details">
+					<summary>Filters</summary>
+					<form method="GET" action="{% url 'schedule:schedule' %}">
+						<div class="form-row">
+							<div class="col-sm">
+								<label for="teacher">Teacher:</label>
+								<select name="teacher" size="1" selected="{{ filters_values.0 }}">
+									<option value=""></option>
+									{% for name in filters.0 %}
+									<option value="{{ name }}">{{ name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="col-sm">
+								<label for="subj">Subject:</label>
+								<select name="subj" size="1" selected="{{ filters_values.1 }}">
+									<option value=""></option>
+									{% for name in filters.1 %}
+									<option value="{{ name }}">{{ name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="col-sm">
+								<label for="location">Location:</label>
+								<select name="location" size="1" selected="{{ filters_values.2 }}">
+									<option value=""></option>
+									{% for name in filters.2 %}
+									<option value="{{ name }}">{{ name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="col-sm">
+								<label for="room">Room:</label>
+								<select name="room" size="1" selected="{{ filters_values.3 }}">
+									<option value=""></option>
+									{% for name in filters.3 %}
+									<option value="{{ name }}">{{ name }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<div class="col-sm text-center">
+								<input type="hidden" name="starting" value="{{ filters.4 }}"/>
+								<input type="submit" value="Apply"/>
+							</div>
+						</div>
+					</form>
+				</details>
+			</div>
+			<div class="col-auto text-right">
+				<a href="{% url 'schedule:schedule' %}?starting={{ next|date:'Y-m-d' }}&teacher={{ filters_values.0 }}&subj={{ filters_values.1 }}&location={{ filters_values.2 }}&room={{ filters_values.3 }}">Next week &#x25BA</a>
+			</div>
+		</div>
+		<div class="row" id="header-area">
+			<div class="col-xs-1 schedule-column-header">Time</div>
+			{% for date, classes in week.items %}
+			<div class="col schedule-column-header">{{ date }}</div>
+			{% endfor %}
+		</div>
+		<div class="row" id="main-area">
+			<div class="col-xs-1 schedule-timetable">
+				{% for hour in hours %}
+				<div class="schedule-timetable-item" data-time="{{ hour|time:'Hi' }}" data-duration="60">{{ hour|time:'H:i' }} <hr class="hr-timetable"></div>
+				{% endfor %}
+			</div>
+			{% for date, classes in week.items %}
+			<div class="col schedule-column">
+				{% for time, items in classes.items %}
+				{% for item in items %}
+				<div class="schedule-column-item bg_color_{{ item.color }}" data-time="{{ item.time|time:'Hi' }}" data-duration="{{ item.duration }}" data-location="{{item.location}}" data-room="{{ item.room }}" data-subject="{{ item.subject }}" data-level="{{ item.level }}" data-teacher="{{ item.teacher }}" data-iso-time="{{ item.time|time:'H:i' }}" >
+					<div class="row"> 
+						<div class="col-sm schedule-column-item-room">{{ item.room }}</div> <div class="col-sm schedule-column-item-room">{{ item.location }}</div> <div class="col-sm schedule-column-item-time">{{ item.time|time:'H:i' }}</div>
+					</div>
+					<div class="schedule-column-item-subject">{{ item.subject }}</div>
+					<div class="schedule-column-item-level">{{ item.level }}</div>
+					<div class="schedule-column-item-teacher">{{ item.teacher }}</div>
+				</div>
+				{% endfor %}
+				{% endfor %}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	
+	<div id="fade-away">
+	</div>
+	<div id="details-area" class="centered colors-aux-filled">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-right no-gutters" style="vertical-align: middle;">
+						<div class="details-close-button">&#x2573</div>
+					</div>
+					<div class="col text-center">
+						<h2>Event Details</h2>
+					</div>
+				</div>
+				<div class="row details-area-details">
+					<div class="row">
+						<div class="col-sm col-xs">
+						Subject: <span class="details-subject"></span>
+						</div>
+						<div class="col-sm col-xs">
+						Level: <span class="details-level"></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm col-xs">
+						Time: <span class="details-time"></span>
+						</div>
+						<div class="col-sm col-xs">
+						Duration (min): <span class="details-duration"></span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm col-xs">
+						Location: <span class="details-room"></span>
+						</div>
+						<div class="col-sm col-xs">
+						Teacher: <span class="details-teacher"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+    
+{% endblock page-content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Fantasy School{% endblock title %}
+
+{% block styles %}
+{% load static %} <link rel="stylesheet" type="text/css" href="{% static 'contacts/styles.css' %}">
+{% endblock styles %}
+
+{% block scripts %} 
+<script type="text/javascript" src="{% static 'contacts/listeners.js' %}" defer></script> 
+{% endblock scripts %}
+
+{% block topbar-menu-contacts %}
+	<a href="{% url 'contacts:contacts' %}">
+		<div class="topbar-menu-current col-auto color-red-on-hover">Contacts</div>
+	</a>
+{% endblock topbar-menu-contacts %}
+
+{% block page-content %}
+<div class="content container">
+		{% for item in object_list %}
+		<div class="colors-main-text container contact-item">
+			<div class="row contact-item-text">
+				<h2 class="col-12 contact-item-text-name">{{ item.name }}</h2>
+				<p class="col-12 contact-item-text-address">{{ item.address }}</p>
+				{% for element in item.contacts %}<p class="col-12">{{ element }}</p>{% endfor %}
+			</div>
+			<div class="row contact-item-images">
+				{% if item.photo %}
+				<div class="col-4 justify-content-center covered contact-item-images-container">
+					<a href="{{ item.photo.url }}" class="contact-item-images-container">
+						<div class="contact-item-img cover-parent covered" style="background-image: url('{{ item.photo.url }}')">
+							<div class="overlay color-red-filled-on-hover h-100 w-100"></div>
+							<div class="cover-parent center-outer">
+								<span class="glass center-inner col-auto">&#x2315;</span>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% endif %}
+				{% if item.route_photo %}
+				<div class="col-4 justify-content-center contact-item-images-container covered">
+					<a href="{{ item.route_photo.url }}" class="contact-item-images-container">
+						<div class="contact-item-img cover-parent covered" style="background-image: url('{{ item.route_photo.url }}')">
+							<div class="overlay color-red-filled-on-hover h-100 w-100"></div>
+							<div class="cover-parent center-outer">
+								<span class="glass center-inner col-auto">&#x2315;</span>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+		{% endfor %}
+</div>
+{% endblock page-content %}

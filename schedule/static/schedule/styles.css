@@ -1,0 +1,183 @@
+body, html {
+	min-width: 740px;
+	height: 100%
+}
+
+#control-area{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#control-area a{
+	color: white;
+	font-family: Arial;
+}
+
+#control-area a:hover{
+	color: white;
+}
+
+.filter-area {
+	margin-bottom: 5px;
+}
+
+#filter-details {
+	width: 100%;
+}
+
+.form-row {
+	margin-top: 10px;
+}
+
+#filter-details select {
+	width: 100%;
+	max-width: 50%;
+}
+
+#header-area {
+	text-align: center;
+}
+
+.content-container {
+	min-width: 740px;
+}
+
+.schedule-column {
+	position: relative;
+}
+
+.schedule-column-header {
+	border-bottom: 1px solid black;
+}
+
+.schedule-column-item {
+	border: 1px solid black;
+	border-radius: 5px;
+	text-align: center;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+
+.schedule-column-item div {
+	text-overflow: ellipsis;
+	white-space: nowrap; 
+}
+
+.schedule-column-item:hover {
+	border: 1px solid gray;
+	border-radius: 5px;
+	text-align: center;
+	background-color: #5b616a;
+	cursor: pointer;
+	color: white;
+}
+
+.schedule-column-item-time {
+	font-size: 0.7em;
+	font-family: ;
+}
+
+.schedule-column-item-room {
+	font-size: 0.7em;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.schedule-column-item-subject {
+	font-size: 1em;
+	text-decoration: underline;
+	border-top: 1px solid lightgray;
+}
+
+.schedule-column-item-level {
+	font-style: italic;
+	font-size: 0.8em;
+}
+
+.schedule-column-item-teacher {
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+#main-area hr {
+	position: absolute;
+	left: 0;
+}
+
+.hr-timetable{
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.bg_color_0 {
+    background-color: rgb(204, 255, 255, 0.8); /*#ccffff*/
+	border-color: #68d9d9;
+}
+
+.bg_color_1 {
+    background-color: rgb(255, 204, 204, 0.8); /*#ffcccc*/
+	border-color: #d95959;
+}
+
+.bg_color_2 {
+    background-color: rgb(204, 255, 204, 0.8); /*#ccffcc*/
+	border-color: #5ad15a;
+}
+
+.bg_color_3 {
+    background-color: rgb(255, 204, 255, 0.8); /*#ffccff*/
+	border-color: #e05ce0;
+}
+
+.bg_color_4 {
+    background-color: rgb(255, 229, 173, 0.8); /*#ffe5ad*/
+	border-color: #d9ad50;
+}
+
+.bg_color_5 {
+    background-color: rgb(204, 204, 255, 0.8); /*#ccccff*/
+	border-color: #6363db;
+}
+
+#fade-away {
+	display: none;
+	background-color: white;
+	opacity: 0.6;
+	postition: fixed;
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}
+
+#details-area {
+	display: none;
+	/*height: 160px;*/
+	width: 20vw;
+	max-width: 90vw;
+	min-width: 250px;
+	z-index: 1000;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.centered {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.details-area-details {
+	padding: 20px;
+}
+
+.details-close-button {
+	vertical-align: middle;
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+
+ul {
+  list-style-type: none;
+ }

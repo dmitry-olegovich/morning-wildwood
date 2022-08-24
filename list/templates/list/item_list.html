@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Fantasy School{% endblock title %}
+
+{% block styles %}
+{% load static %} <link rel="stylesheet" type="text/css" href="{% static 'list/styles.css' %}">
+{% endblock styles %}
+
+{% block scripts %} 
+<script type="text/javascript" src="{% static 'list/listeners.js' %}" defer></script> 
+{% endblock scripts %}
+
+{% block topbar-menu-teachers %}
+	{% if table == 'teachers' %}
+	<a href="{% url 'list:list_items' list_name='teachers' %}">
+		<div class="topbar-menu-current col-auto color-red-on-hover">Teachers</div>
+	</a>
+	{% else %}
+	<a href="{% url 'list:list_items' list_name='teachers' %}">
+		<div class="col-auto color-red-on-hover">Teachers</div>
+	</a>
+	{% endif %}
+{% endblock topbar-menu-teachers %}
+{% block topbar-menu-classes %}
+	{% if table == 'classes' %}
+	<a href="{% url 'list:list_items' list_name='classes' %}">
+		<div class="topbar-menu-current col-auto color-red-on-hover">Classes</div>
+	</a>
+	{% else %}
+	<a href="{% url 'list:list_items' list_name='classes' %}">
+		<div class="col-auto color-red-on-hover">Classes</div>
+	</a>
+	{% endif %}
+{% endblock topbar-menu-classes %}
+
+{% block page-content %}
+<div class="content container">
+	
+	<div class="row items-row">
+		{% for item in object_list %}
+		<a class="col-4 item-container-container color-text-over-overlay h-100" href="{% url 'list:show_item' list_name=table pk=item.id %}">
+			<div class="covered item-container h-100">
+				{% if item.photo_small %}
+				<div class="item-img cover-parent" style="background-image: url('{{ item.photo_small.url }}')">
+				{% else %}
+				<div class="item-img cover-parent" style="background-color: rgb(150, 150, 150)">
+				{% endif %}
+					<div class="overlay color-red-filled h-100 w-100"></div>
+				</div>
+				<div class="item-name-container">
+					<h1 class="item-name-box">{{ item.name }}</h1>
+				</div>
+				<div class="item-descrption-container">
+					{% if item.speciality_active %}
+					<p class="item-descrption-box">
+					{% for class in item.speciality_active %} 
+					{{ class }}{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+					</p>
+					{% endif %}
+				</div>
+			</div>
+		</a>
+		{% empty %}
+		<p>No entiries found!</p>
+		{% endfor %}
+	</div>
+	
+	
+	{% if is_paginated %}
+       <div class="pagination row">
+		<div class="col text-center">
+			{% if page_obj.has_previous %}
+			<a class="paginator-arrows colors-main-text" href="{% url 'list:list_items' list_name=table %}?page={{ page_obj.previous_page_number }}">
+				<span class="center-text paginator-arrows-icon">&lt</span>
+			</a>
+			{% else %}
+			<div class="paginator-arrows-disabled">
+				<span class="center-text paginator-arrows-icon">&lt</span>
+			</div>
+			{% endif %}
+		</div>
+		<div class="col text-center paginator-pages">
+			<div class="row justify-content-center">
+				{% spaceless %}
+				{% with ' '|center:page_obj.paginator.num_pages as range %}
+				{% for _ in range %}
+				{% if forloop.counter == page_obj.number %}
+				<div class="col-1 text-center"><div class="paginator-page-repr paginator-page-repr-current"></div></div>
+				{% else %}
+				<div class="col-1 text-center"><div class="paginator-page-repr"></div></div>
+				{% endif %}
+				{% endfor %}
+				{% endwith %}
+				{% endspaceless %}
+			</div>
+		</div>
+		<div class="col text-center">
+			{% if page_obj.has_next %}
+			<a class="paginator-arrows colors-main-text" href="{% url 'list:list_items' list_name=table %}?page={{ page_obj.next_page_number }}">
+				<span class="center-text paginator-arrows-icon">&gt</span>
+			</a>
+			{% else %}
+			<div class="paginator-arrows-disabled">
+				<span class="center-text paginator-arrows-icon">&gt</span>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% endblock page-content %}

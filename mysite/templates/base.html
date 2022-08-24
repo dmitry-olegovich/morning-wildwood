@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <title>
+        {% block page-title %}
+			{{ page_title|default:"Fantasy school" }}
+        {% endblock page-title %}
+    </title>
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<!-- Bootstrap core JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+    {% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'base_styles.css' %}">
+	<script type="text/javascript" src="{% static 'ajax_populate.js' %}" defer></script>
+	
+    {% block styles %}<!-- Extra styles -->{% endblock styles %} 
+	{% block scripts %}<!-- Extra scripts -->{% endblock scripts %} 
+	
+  </head>
+  <body class="d-flex flex-column color-background-white">
+	{% block topbar %}
+	<header class="topbar-wrapper colors-main-filled">
+		<div class="container">
+			<div class="row logo-bottom-border justify-content-start align-items-end">
+				<a href="{% url 'welcome:welcome' %}">
+					<div class="col-auto top-bar-logo">
+						Fantasy School
+					</div>
+				</a>
+				<div class="col">
+				</div>
+				<div id="topbar-login" class="col-auto">
+					<a href={% url 'admin:login' %}>log in</a>
+				</div>
+				<div id="topbar-logout" class="col-auto">
+					<a href={% url 'logout' %}>log out</a>
+				</div>
+			</div>
+			{% block topbar-menu %}
+			<div class="row justify-content-start top-bar-menu">
+				{% block topbar-menu-teachers %}
+				<a href="{% url 'list:list_items' list_name='teachers' %}">
+					<div class="col-auto color-red-on-hover">Teachers</div>
+				</a>
+				{% endblock topbar-menu-teachers %}
+				{% block topbar-menu-classes %}
+				<a href="{% url 'list:list_items' list_name='classes' %}">
+					<div class="col-auto color-red-on-hover">Classes</div>
+				</a>
+				{% endblock topbar-menu-classes %}
+				{% block topbar-menu-schedule %}
+				<div  class="dropdown col-auto color-red-on-hover">
+					<div id="menu-schedule" class="dropdown-toggle" data-toggle="dropdown">Schedule</div>
+					<ul class="dropdown-menu colors-main-filled topbar-menu-dropdown-menu" role="menu" aria-labelledby="menu1">
+					</ul>
+				</div>
+				{% endblock topbar-menu-schedule %}
+				{% block topbar-menu-contacts %}
+				<a href="{% url 'contacts:contacts' %}">
+					<div class="col-auto color-red-on-hover">Contacts</div>
+				</a>
+				{% endblock topbar-menu-contacts %}
+				{% block topbar-menu-admin %}
+				<a href="{% url 'admin:index' %}">
+					<div class="col-auto color-red-on-hover">Administration</div>
+				</a>
+				{% endblock topbar-menu-admin %}
+			</div>
+			{% endblock topbar-menu %}
+		</div>
+	</header>
+	{% endblock topbar %}
+	
+	<main class="container-fluid flex-fill no-padding">
+		{% block page-content %}
+		<!--Placeholder text in base template. Replace with page content.-->
+		{% endblock page-content %}
+	</main>
+	
+	
+	{% block bottombar %}
+	<footer class="footer no-padding">
+		<div class="bottom-bar colors-main-filled container-fluid">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						(c) Fantasy School
+					</div>
+					<div id="footer-contacts" class="col text-right">
+						342 Abbey rd. +1 355 555 5555
+					</div>
+				</div>
+			</div>	
+		</div>
+	</footer>
+	{% endblock bottombar %}
+	
+	</body>
+</html>

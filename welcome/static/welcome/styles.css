@@ -1,0 +1,52 @@
+
+.inactive {
+	opacity: 0;
+	display: none;
+	transition: opacity 350ms ease-in-out;
+}
+
+.content {
+	height: 100%;
+}
+
+.welcome-img{
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-attachment: scroll;
+}
+
+.full-width {
+	width: 100%;
+}
+
+.slide-button{
+	height: 60px;
+	width: 60px;
+	min-width: ;
+	max-width: ;
+	background: rgba(0, 0, 0, 0.2);
+	opacity: 0.3;
+	margin: 10px;
+	border-radius: 30px;
+	position: relative;
+}
+
+.slide-button-icon {
+	font-size: 2em;
+}
+
+.slide-button:hover{
+	opacity: 0.75;
+	cursor: pointer;
+}
+
+.slide-title{
+	font-family: ;
+	font-size: ;
+}
+
+.slide-text{
+	font-family: ;
+	font-size: 1.3em;
+}

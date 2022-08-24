@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome to Fantasy School{% endblock title %}
+
+{% block styles %}
+{% load static %} <link rel="stylesheet" type="text/css" href="{% static 'list/styles.css' %}">
+{% endblock styles %}
+
+{% block topbar-menu-teachers %}
+	{% if table == 'teachers' %}
+	<a href="{% url 'list:list_items' list_name='teachers' %}">
+		<div class="topbar-menu-current col-auto color-red-on-hover">Teachers</div>
+	</a>
+	{% else %}
+	<a href="{% url 'list:list_items' list_name='teachers' %}">
+		<div class="col-auto color-red-on-hover">Teachers</div>
+	</a>
+	{% endif %}
+{% endblock topbar-menu-teachers %}
+{% block topbar-menu-classes %}
+	{% if table == 'classes' %}
+	<a href="{% url 'list:list_items' list_name='classes' %}">
+		<div class="topbar-menu-current col-auto color-red-on-hover">Classes</div>
+	</a>
+	{% else %}
+	<a href="{% url 'list:list_items' list_name='classes' %}">
+		<div class="col-auto color-red-on-hover">Classes</div>
+	</a>
+	{% endif %}
+{% endblock topbar-menu-classes %}
+
+{% block page-content %}
+	<div class="content container">
+		
+			<div class="row detail-item-container">
+				<div class="col-3 detail-avatar-container">
+					{% if object.photo_small %}
+					<img class="row detail-avatar-img" src="{{ object.photo_small.url }}">
+					{% else %}
+					<img class="row detail-avatar-img" src="">
+					{% endif %}
+					{% if table == 'teachers' %}<a href="{% url 'schedule:schedule' %}?teacher={{ object.name }}" class="row">Click here to see classes by {{ object.name }}</a>
+					{%  elif table == 'classes' %}<a href="{% url 'schedule:schedule' %}?subj={{ object.name }}" class="row">Click here to see  {{ object.name }} classes</a>
+					{% endif %}
+				</div>
+				<div class="col-auto detail-item-text-box colors-main-text">
+					<div class="row">
+						<h4 id="detail-item-name">{{ object.name }}</h4>
+					</div>
+					{% if speciality_active %}
+					<div class="row detail-item-text-box-text">
+						<p>Speciality: 
+						{% for class in speciality_active %} 
+						{{ class }}{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+						</p>
+					</div>
+					{% endif %}
+					<div class="row">
+						<p class="detail-item-text-box-text">{{ object.description }}</p>
+					</div>
+				</div>
+			</div>
+		
+	</div>
+{% endblock page-content %}

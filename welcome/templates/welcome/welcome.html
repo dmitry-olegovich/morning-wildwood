@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Welcome to Fantasy School{% endblock title %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'welcome/styles.css' %}">
+{% endblock styles %}
+
+{% block scripts %}
+{% load static %}
+<script type="text/javascript" src="{% static 'welcome/slide_show.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block page-content %}
+	<div class="content covered container-fluid no-padding">
+		<!-- Slide image url goes in this style block-->
+		{% for item in slides %}
+		<div class="cover-parent welcome-img {% if forloop.counter > 1 %}inactive{% endif %}" style="background-image: url('{{ item.photo.url }}')"> 
+			<div class="overlay color-red-filled h-100 w-100"></div>
+		</div>
+		{% endfor %}
+		<div class="container-fluid h-100">
+			<div class="row h-100 align-items-center">
+				<div class="col-auto color-text-over-overlay">
+					<div id="previous-slide-button" class="slide-button">
+						<span class="center-text slide-button-icon">&#8249;</span>
+					</div>
+				</div>
+				<div class="col h-100">
+					<div class="container h-100">
+						<div class="row align-items-end h-25">
+							<div class="col-6">
+								<!-- Slide Title goes in this header -->
+								{% for item in slides %}
+								<h1 class="slide-title color-text-over-overlay {% if forloop.counter > 1 %}inactive{% endif %}">{{ item.title }}</h1> 
+								{% endfor %}
+							</div>
+						</div>
+						<div class="row h-50 align-items-center justify-content-center">
+							<div class="col-9 ">
+							<!-- Slide text goes in this p tag -->
+							{% for item in slides %}
+								<p class="slide-text color-text-over-overlay {% if forloop.counter > 1 %}inactive{% endif %}">{{ item.text }}</p>
+							{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-auto color-text-over-overlay">
+					<div id="next-slide-button" class="slide-button">
+						<span class="center-text slide-button-icon">&#8250;</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock page-content %}
